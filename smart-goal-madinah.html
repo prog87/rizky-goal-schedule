@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMART Goal — Perjalanan Menuju Madinah</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dim: #8B6F2E;
+    --green-dark: #0D3B2E;
+    --green-mid: #1A5C42;
+    --green-light: #2E7D57;
+    --cream: #F5EDD8;
+    --cream-dim: #E8DCBF;
+    --white: #FDFAF3;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--green-dark);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--cream);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% -10%, rgba(201,168,76,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 100% 100%, rgba(46,125,87,0.2) 0%, transparent 60%);
+    pointer-events: none; z-index: 0;
+  }
+  .page { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 40px 20px 80px; }
+
+  .header { text-align: center; margin-bottom: 52px; }
+  .bismillah { font-family:'Amiri',serif; font-size:2rem; color:var(--gold-light); margin-bottom:18px; opacity:0; animation:fadeDown .8s ease forwards .2s; }
+  .header-badge { display:inline-block; background:linear-gradient(135deg,var(--gold-dim),var(--gold)); color:var(--green-dark); font-size:0.68rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; padding:6px 18px; border-radius:100px; margin-bottom:18px; opacity:0; animation:fadeDown .8s ease forwards .4s; }
+  h1 { font-family:'Amiri',serif; font-size:clamp(1.9rem,5vw,3rem); font-weight:700; color:var(--white); line-height:1.2; margin-bottom:14px; opacity:0; animation:fadeDown .8s ease forwards .5s; }
+  h1 span { color:var(--gold); }
+  .header-sub { font-size:.9rem; color:rgba(245,237,216,0.65); max-width:540px; margin:0 auto; line-height:1.7; opacity:0; animation:fadeDown .8s ease forwards .65s; }
+  .divider { width:60px; height:2px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:24px auto; }
+
+  .profile-card { background:linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02)); border:1px solid rgba(201,168,76,0.3); border-radius:20px; padding:24px 28px; margin-bottom:40px; display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:18px; opacity:0; animation:fadeUp .8s ease forwards .8s; }
+  .profile-item { text-align:center; }
+  .profile-icon { font-size:1.5rem; margin-bottom:6px; }
+  .profile-label { font-size:.65rem; letter-spacing:.12em; text-transform:uppercase; color:var(--gold-dim); font-weight:600; margin-bottom:4px; }
+  .profile-value { font-size:.82rem; color:var(--cream); font-weight:500; line-height:1.4; }
+
+  .section { margin-bottom:44px; opacity:0; animation:fadeUp .8s ease forwards; }
+  .section:nth-child(3){animation-delay:.85s}
+  .section:nth-child(4){animation-delay:.95s}
+  .section:nth-child(5){animation-delay:1.05s}
+  .section:nth-child(6){animation-delay:1.15s}
+  .section:nth-child(7){animation-delay:1.25s}
+  .section:nth-child(8){animation-delay:1.35s}
+  .section:nth-child(9){animation-delay:1.45s}
+
+  .section-header { display:flex; align-items:center; gap:14px; margin-bottom:20px; }
+  .section-num { width:38px; height:38px; background:linear-gradient(135deg,var(--gold-dim),var(--gold)); color:var(--green-dark); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:.78rem; font-weight:800; flex-shrink:0; }
+  .section-title { font-size:1.05rem; font-weight:700; color:var(--gold-light); }
+  .section-subtitle { font-size:.73rem; color:rgba(245,237,216,0.5); margin-top:2px; }
+
+  .smart-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:14px; }
+  .smart-card { background:rgba(255,255,255,0.04); border:1px solid rgba(201,168,76,0.2); border-radius:16px; padding:20px; transition:border-color .3s,background .3s; position:relative; overflow:hidden; }
+  .smart-card::before { content:attr(data-letter); position:absolute; top:-10px; right:12px; font-family:'Amiri',serif; font-size:5rem; font-weight:700; color:var(--gold); opacity:0.06; line-height:1; pointer-events:none; }
+  .smart-card:hover { background:rgba(201,168,76,0.07); border-color:rgba(201,168,76,0.45); }
+  .smart-letter { display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; background:linear-gradient(135deg,var(--green-light),var(--green-mid)); border:1px solid rgba(201,168,76,0.4); border-radius:7px; font-weight:800; font-size:.85rem; color:var(--gold-light); margin-bottom:10px; }
+  .smart-word { font-size:.65rem; text-transform:uppercase; letter-spacing:.15em; color:var(--gold-dim); font-weight:600; margin-bottom:7px; }
+  .smart-text { font-size:.84rem; color:var(--cream); line-height:1.65; }
+  .smart-text strong { color:var(--gold-light); }
+
+  .pillars { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px; }
+  .pillar { background:rgba(255,255,255,0.03); border:1px solid rgba(201,168,76,0.18); border-left:3px solid var(--gold); border-radius:12px; padding:18px 20px; }
+  .pillar-icon { font-size:1.3rem; margin-bottom:7px; }
+  .pillar-title { font-size:.76rem; font-weight:700; color:var(--gold-light); text-transform:uppercase; letter-spacing:.1em; margin-bottom:8px; }
+  .pillar-items { list-style:none; }
+  .pillar-items li { font-size:.8rem; color:var(--cream); opacity:.85; padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.06); display:flex; align-items:flex-start; gap:7px; line-height:1.5; }
+  .pillar-items li:last-child { border-bottom:none; }
+  .pillar-items li::before { content:'◆'; color:var(--gold); font-size:.42rem; margin-top:5px; flex-shrink:0; }
+
+  .timeline { position:relative; padding-left:26px; }
+  .timeline::before { content:''; position:absolute; left:9px; top:0; bottom:0; width:2px; background:linear-gradient(180deg,var(--gold),transparent); }
+  .tl-item { position:relative; margin-bottom:22px; }
+  .tl-dot { position:absolute; left:-22px; top:4px; width:13px; height:13px; background:var(--gold); border-radius:50%; border:2px solid var(--green-dark); box-shadow:0 0 0 3px rgba(201,168,76,0.25); }
+  .tl-period { font-size:.68rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:var(--gold); margin-bottom:5px; }
+  .tl-title { font-size:.92rem; font-weight:700; color:var(--white); margin-bottom:5px; }
+  .tl-desc { font-size:.8rem; color:rgba(245,237,216,0.72); line-height:1.65; }
+  .tl-tags { display:flex; flex-wrap:wrap; gap:5px; margin-top:7px; }
+  .tl-tag { font-size:.62rem; padding:3px 9px; border-radius:100px; background:rgba(201,168,76,0.12); border:1px solid rgba(201,168,76,0.25); color:var(--gold-light); font-weight:600; }
+
+  .skill-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; }
+  .skill-card { background:rgba(255,255,255,0.04); border:1px solid rgba(201,168,76,0.2); border-radius:16px; padding:20px; }
+  .skill-header { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+  .skill-icon { font-size:1.6rem; }
+  .skill-name { font-size:.9rem; font-weight:700; color:var(--gold-light); }
+  .skill-sub { font-size:.7rem; color:rgba(245,237,216,0.5); margin-top:2px; }
+  .skill-row { display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.06); }
+  .skill-row:last-child { border-bottom:none; }
+  .skill-phase { color:var(--gold); font-weight:600; font-size:.72rem; }
+  .skill-detail { color:rgba(245,237,216,0.75); font-size:.76rem; text-align:right; }
+
+  /* TAB */
+  .tab-bar { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:20px; }
+  .tab-btn { padding:8px 16px; border-radius:100px; border:1px solid rgba(201,168,76,0.25); background:rgba(255,255,255,0.04); color:rgba(245,237,216,0.6); font-family:'Plus Jakarta Sans',sans-serif; font-size:.75rem; font-weight:600; letter-spacing:.06em; cursor:pointer; transition:all .25s; }
+  .tab-btn:hover { background:rgba(201,168,76,0.1); color:var(--gold-light); }
+  .tab-btn.active { background:linear-gradient(135deg,var(--gold-dim),var(--gold)); color:var(--green-dark); border-color:transparent; }
+  .tab-pane { display:none; }
+  .tab-pane.active { display:block; }
+
+  /* SCHEDULE */
+  .schedule { display:grid; gap:9px; }
+  .sched-item { display:grid; grid-template-columns:100px 1fr; gap:14px; align-items:start; padding:13px 16px; border-radius:12px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); transition:background .2s; }
+  .sched-item:hover { background:rgba(201,168,76,0.06); }
+  .sched-item.highlight { background:rgba(201,168,76,0.09); border-color:rgba(201,168,76,0.28); }
+  .sched-item.kerja-block { background:rgba(46,125,87,0.12); border-color:rgba(46,125,87,0.3); }
+  .sched-time { font-size:.72rem; font-weight:700; color:var(--gold); line-height:1.4; }
+  .sched-dur { font-size:.6rem; color:rgba(201,168,76,0.5); font-weight:400; margin-top:2px; }
+  .sched-act { font-size:.86rem; font-weight:600; color:var(--cream); margin-bottom:3px; }
+  .sched-note { font-size:.76rem; color:rgba(245,237,216,0.6); line-height:1.5; }
+  .sched-cat { display:inline-block; font-size:.58rem; padding:2px 8px; border-radius:100px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; margin-top:5px; }
+  .cat-ibadah   { background:rgba(201,168,76,0.2);  color:var(--gold-light); }
+  .cat-kerja    { background:rgba(46,125,87,0.35);  color:#7DDDAA; }
+  .cat-wp       { background:rgba(80,100,200,0.25); color:#A0B4FF; }
+  .cat-english  { background:rgba(30,160,200,0.22); color:#80D8FF; }
+  .cat-desain   { background:rgba(200,80,160,0.22); color:#FFB0E0; }
+  .cat-keluarga { background:rgba(200,80,80,0.2);   color:#FFAAAA; }
+  .cat-istirahat{ background:rgba(100,100,100,0.25);color:#CCCCCC; }
+  .cat-fisik    { background:rgba(200,140,30,0.2);  color:#FFCC66; }
+  .cat-review   { background:rgba(100,180,100,0.2); color:#AAFFB8; }
+
+  .week-summary { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; }
+  .week-card { background:rgba(255,255,255,0.03); border:1px solid rgba(201,168,76,0.15); border-radius:12px; padding:14px; text-align:center; }
+  .week-day { font-size:.68rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+  .week-items { display:flex; flex-direction:column; gap:4px; }
+  .week-item { font-size:.7rem; color:rgba(245,237,216,0.75); }
+  .week-item.special { color:var(--gold-light); font-weight:600; }
+
+  .tips-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:13px; }
+  .tip-card { background:rgba(255,255,255,0.03); border:1px solid rgba(201,168,76,0.15); border-radius:14px; padding:18px; text-align:center; }
+  .tip-icon { font-size:1.7rem; margin-bottom:9px; }
+  .tip-title { font-size:.76rem; font-weight:700; color:var(--gold-light); margin-bottom:6px; text-transform:uppercase; letter-spacing:.08em; }
+  .tip-text { font-size:.76rem; color:rgba(245,237,216,0.7); line-height:1.6; }
+
+  .doa-box { background:linear-gradient(135deg,rgba(201,168,76,0.1),rgba(13,59,46,0.5)); border:1px solid rgba(201,168,76,0.35); border-radius:20px; padding:30px; text-align:center; margin-top:48px; }
+  .doa-arabic { font-family:'Amiri',serif; font-size:1.5rem; color:var(--gold-light); margin-bottom:12px; line-height:2; }
+  .doa-latin { font-size:.78rem; color:rgba(245,237,216,0.6); font-style:italic; margin-bottom:6px; }
+  .doa-arti { font-size:.8rem; color:rgba(245,237,216,0.85); }
+  .footer { text-align:center; margin-top:50px; font-size:.7rem; color:rgba(245,237,216,0.28); }
+
+  @keyframes fadeDown { from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeUp   { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+    <div class="header-badge">SMART Goal · Time Management · v2.0</div>
+    <h1>Perjalanan Menuju <span>Madinah Al-Munawwarah</span></h1>
+    <div class="divider"></div>
+    <p class="header-sub">Rencana terstruktur seorang suami, ayah tiga anak, perawat puskesmas & WordPress developer — lengkap dengan bahasa Inggris & desain grafis — menuju hidup & bekerja di kota Nabi ﷺ</p>
+  </div>
+
+  <div class="profile-card">
+    <div class="profile-item"><div class="profile-icon">👨‍👩‍👧‍👦</div><div class="profile-label">Status</div><div class="profile-value">Suami & Ayah 3 Anak</div></div>
+    <div class="profile-item"><div class="profile-icon">🕌</div><div class="profile-label">Agama</div><div class="profile-value">Islam (Mukmin)</div></div>
+    <div class="profile-item"><div class="profile-icon">🏥</div><div class="profile-label">Kerja</div><div class="profile-value">Perawat Puskesmas</div></div>
+    <div class="profile-item"><div class="profile-icon">⏰</div><div class="profile-label">Jam Kerja</div><div class="profile-value">Sen–Kam: 07:30–16:30<br>Jum: 07:30–14:30</div></div>
+    <div class="profile-item"><div class="profile-icon">🌙</div><div class="profile-label">Tidur / Bangun</div><div class="profile-value">22:30 malam / 04:00 pagi</div></div>
+    <div class="profile-item"><div class="profile-icon">🕋</div><div class="profile-label">Impian Besar</div><div class="profile-value">Tinggal & Kerja di Madinah</div></div>
+  </div>
+
+  <!-- SMART -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div><div class="section-title">SMART Goal Utama</div><div class="section-subtitle">Spesifik · Terukur · Achievable · Relevan · Time-bound</div></div>
+    </div>
+    <div class="smart-grid">
+      <div class="smart-card" data-letter="S">
+        <div class="smart-letter">S</div>
+        <div class="smart-word">Specific — Spesifik</div>
+        <div class="smart-text">Menjadi <strong>WordPress Developer + Desainer Grafis freelance</strong> yang fasih berbahasa Inggris & Arab dasar, mampu melayani klien internasional, sambil tetap berprofesi perawat, sehingga dapat <strong>pindah & menetap di Madinah</strong> sebelum usia 42 tahun bersama seluruh keluarga.</div>
+      </div>
+      <div class="smart-card" data-letter="M">
+        <div class="smart-letter">M</div>
+        <div class="smart-word">Measurable — Terukur</div>
+        <div class="smart-text">
+          • WordPress: <strong>min. 45 mnt/hari</strong><br>
+          • Bahasa Inggris: <strong>min. 30–45 mnt/hari</strong><br>
+          • Desain Grafis: <strong>min. 30 mnt/hari</strong><br>
+          • <strong>3 klien freelance</strong> dalam 12 bulan<br>
+          • Skor IELTS <strong>≥ 5.5</strong> di tahun ke-2<br>
+          • Income freelance <strong>≥ USD 1.000/bln</strong> tahun ke-2
+        </div>
+      </div>
+      <div class="smart-card" data-letter="A">
+        <div class="smart-letter">A</div>
+        <div class="smart-word">Achievable — Dapat Dicapai</div>
+        <div class="smart-text">Laptop + internet sudah cukup untuk belajar WP, Canva/Figma, dan kursus Inggris online gratis (Duolingo, BBC). Jadwal pagi 04:00–07:30 dan sore setelah 16:30 menyediakan <strong>2–3 jam belajar/hari</strong> di hari kerja, dan lebih banyak di Sabtu–Ahad.</div>
+      </div>
+      <div class="smart-card" data-letter="R">
+        <div class="smart-letter">R</div>
+        <div class="smart-word">Relevant — Relevan</div>
+        <div class="smart-text">Madinah butuh tenaga <strong>IT, desain, & kesehatan</strong>. Kombinasi WP + desain grafis + Inggris = paket lengkap untuk freelance global yang bisa dikerjakan <strong>remote dari mana saja</strong>, termasuk setelah menetap di Madinah.</div>
+      </div>
+      <div class="smart-card" data-letter="T">
+        <div class="smart-letter">T</div>
+        <div class="smart-word">Time-bound — Batas Waktu</div>
+        <div class="smart-text">
+          • <strong>6 bulan</strong>: Portfolio WP + desain pertama selesai<br>
+          • <strong>1 tahun</strong>: Klien berbayar + Inggris percakapan<br>
+          • <strong>2 tahun</strong>: Freelance income stabil<br>
+          • <strong>3–5 tahun</strong>: Proses visa & relokasi<br>
+          • <strong>Usia 42</strong>: Menetap di Madinah إن شاء الله
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PILAR -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div><div class="section-title">4 Pilar Pencapaian</div><div class="section-subtitle">Ruhiyah · Skill Digital · Bahasa · Keluarga</div></div>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-icon">🕌</div>
+        <div class="pillar-title">Pilar Ruhiyah</div>
+        <ul class="pillar-items">
+          <li>Shalat 5 waktu tepat waktu</li>
+          <li>Tahajud minimal 3x/minggu</li>
+          <li>Tilawah & hafalan Al-Qur'an harian</li>
+          <li>Dzikir pagi-petang rutin</li>
+          <li>Sedekah setiap Jumat</li>
+          <li>Kajian Islam online mingguan</li>
+        </ul>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">💻</div>
+        <div class="pillar-title">Pilar WordPress & Desain</div>
+        <ul class="pillar-items">
+          <li>WP: Elementor, WooCommerce, SEO</li>
+          <li>Desain: Canva → Figma → Photoshop → Illustrator</li>
+          <li>Bangun 3 website portfolio</li>
+          <li>Buat 5 template desain/bulan</li>
+          <li>Daftar Upwork, Fiverr, 99designs</li>
+          <li>Update portofolio setiap bulan</li>
+        </ul>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🌍</div>
+        <div class="pillar-title">Pilar Bahasa</div>
+        <ul class="pillar-items">
+          <li>Inggris: Duolingo + speaking harian</li>
+          <li>Nonton konten Inggris tanpa subtitle</li>
+          <li>Arab: kosakata dasar 5 kata/hari</li>
+          <li>Journaling dalam bahasa Inggris</li>
+          <li>Ikut komunitas conversation online</li>
+          <li>Target IELTS 5.5 di tahun ke-2</li>
+        </ul>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">👨‍👩‍👧‍👦</div>
+        <div class="pillar-title">Pilar Keluarga</div>
+        <ul class="pillar-items">
+          <li>Quality time malam hari bersama anak</li>
+          <li>Libatkan istri dalam rencana hijrah</li>
+          <li>Nabung Dana Hijrah tiap bulan</li>
+          <li>Ajarkan anak cinta Nabi ﷺ</li>
+          <li>Jaga kesehatan fisik & mental</li>
+          <li>Family outing Sabtu atau Ahad</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROADMAP -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div><div class="section-title">Roadmap 5 Tahun Menuju Madinah</div><div class="section-subtitle">Milestone yang terukur per fase waktu</div></div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Bulan 1–6 · Fondasi</div>
+        <div class="tl-title">🌱 Bangun Pondasi Skill Lengkap</div>
+        <div class="tl-desc">Kursus WP dasar. Mulai Duolingo Inggris + 1 video Inggris/hari. Kuasai Canva desain grafis. Buat 2 website dummy & 3 desain portfolio. Buka akun Fiverr. Rutin ibadah & tilawah harian.</div>
+        <div class="tl-tags"><span class="tl-tag">WP Dasar</span><span class="tl-tag">Canva</span><span class="tl-tag">Duolingo</span><span class="tl-tag">Portfolio Awal</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Bulan 7–12 · Pertumbuhan</div>
+        <div class="tl-title">🚀 Klien Pertama & Income Tambahan</div>
+        <div class="tl-desc">Dapatkan 1–3 klien WP berbayar. Pelajari Figma, Photoshop & Illustrator (logo vektor). Inggris percakapan bisa digunakan dengan klien. Mulai belajar bahasa Arab dasar. Tabung 10–15% untuk Dana Hijrah.</div>
+        <div class="tl-tags"><span class="tl-tag">Klien Pertama</span><span class="tl-tag">Figma</span><span class="tl-tag">Illustrator</span><span class="tl-tag">Inggris Percakapan</span><span class="tl-tag">Dana Hijrah</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Tahun 2 · Akselerasi</div>
+        <div class="tl-title">📈 Freelance Stabil & Multi-Skill</div>
+        <div class="tl-desc">Target USD 500–1000/bulan dari freelance. Klien internasional via Upwork. Ikut tes IELTS/TOEFL. Kuasai branding & social media design. Diskusi serius keluarga tentang rencana pindah.</div>
+        <div class="tl-tags"><span class="tl-tag">Upwork</span><span class="tl-tag">IELTS</span><span class="tl-tag">Branding Design</span><span class="tl-tag">Diskusi Hijrah</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Tahun 3–4 · Persiapan Hijrah</div>
+        <div class="tl-title">🗂️ Persiapan Legal & Administratif</div>
+        <div class="tl-desc">Riset visa iqamah kerja Saudi. Cari peluang kerja di klinik/RS Madinah. Hubungi komunitas WNI di Madinah. Siapkan dokumen keluarga lengkap. Mulai proses pengajuan.</div>
+        <div class="tl-tags"><span class="tl-tag">Riset Visa Saudi</span><span class="tl-tag">Job Hunt Madinah</span><span class="tl-tag">Dokumen Legal</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">Tahun 5+ · Impian Terwujud</div>
+        <div class="tl-title">🕌 Menetap di Madinah Al-Munawwarah</div>
+        <div class="tl-desc">Bekerja di Madinah (perawat ATAU WP+desain freelance remote). Anak-anak sekolah Islam di sana. Ziarah makam Nabi ﷺ kapan pun. Berkontribusi untuk komunitas muslim internasional. إن شاء الله</div>
+        <div class="tl-tags"><span class="tl-tag">Menetap Madinah</span><span class="tl-tag">Keluarga Bersama</span><span class="tl-tag">Ziarah Setiap Saat</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKILL PLAN -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div><div class="section-title">Rencana Belajar 3 Skill Utama</div><div class="section-subtitle">WordPress · Bahasa Inggris · Desain Grafis — bertahap & terukur</div></div>
+    </div>
+    <div class="skill-grid">
+      <div class="skill-card">
+        <div class="skill-header"><div class="skill-icon">💻</div><div><div class="skill-name">WordPress Dev</div><div class="skill-sub">Target: Freelance Global</div></div></div>
+        <div class="skill-row"><span class="skill-phase">Bln 1–3</span><span class="skill-detail">Instalasi, tema, plugin dasar</span></div>
+        <div class="skill-row"><span class="skill-phase">Bln 4–6</span><span class="skill-detail">Elementor, WooCommerce, SEO</span></div>
+        <div class="skill-row"><span class="skill-phase">Bln 7–12</span><span class="skill-detail">Custom theme, klien nyata</span></div>
+        <div class="skill-row"><span class="skill-phase">Thn 2+</span><span class="skill-detail">WP + PHP, plugin custom</span></div>
+        <div class="skill-row"><span class="skill-phase">Platform</span><span class="skill-detail">YouTube, WPBeginner, Udemy</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-header"><div class="skill-icon">🌍</div><div><div class="skill-name">Bahasa Inggris</div><div class="skill-sub">Target: IELTS 5.5 + Klien Asing</div></div></div>
+        <div class="skill-row"><span class="skill-phase">Bln 1–2</span><span class="skill-detail">Duolingo + vocab 10 kata/hari</span></div>
+        <div class="skill-row"><span class="skill-phase">Bln 3–6</span><span class="skill-detail">Grammar + speaking latihan</span></div>
+        <div class="skill-row"><span class="skill-phase">Bln 7–12</span><span class="skill-detail">Conversation, email bisnis</span></div>
+        <div class="skill-row"><span class="skill-phase">Thn 2</span><span class="skill-detail">Ikut IELTS/TOEFL resmi</span></div>
+        <div class="skill-row"><span class="skill-phase">Platform</span><span class="skill-detail">Duolingo, BBC, EF, Elsa Speak</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-header"><div class="skill-icon">🎨</div><div><div class="skill-name">Desain Grafis</div><div class="skill-sub">Target: Portofolio + Freelance</div></div></div>
+        <div class="skill-row"><span class="skill-phase">Bln 1–3</span><span class="skill-detail">Canva: poster, logo, banner</span></div>
+        <div class="skill-row"><span class="skill-phase">Bln 4–6</span><span class="skill-detail">Figma: UI/web design dasar</span></div>
+        <div class="skill-row"><span class="skill-phase">Bln 7–9</span><span class="skill-detail">Photoshop: editing & manipulasi</span></div>
+        <div class="skill-row"><span class="skill-phase">Bln 10–12</span><span class="skill-detail">Illustrator: logo & vektor</span></div>
+        <div class="skill-row"><span class="skill-phase">Thn 2+</span><span class="skill-detail">Branding identity & motion design</span></div>
+        <div class="skill-row"><span class="skill-phase">Platform</span><span class="skill-detail">YouTube, DesignCourse, Canva, Adobe</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JADWAL PER HARI -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <div><div class="section-title">Jadwal Harian Terperinci</div><div class="section-subtitle">Bangun 04:00 · Tidur 22:30 · Pilih hari di bawah ini</div></div>
+    </div>
+
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="showTab('senkam',this)">📅 Senin – Kamis</button>
+      <button class="tab-btn" onclick="showTab('jumat',this)">🕌 Jumat</button>
+      <button class="tab-btn" onclick="showTab('sabtu',this)">🎯 Sabtu</button>
+      <button class="tab-btn" onclick="showTab('ahad',this)">🌿 Ahad</button>
+    </div>
+
+    <!-- SENIN-KAMIS -->
+    <div class="tab-pane active" id="tab-senkam">
+      <div class="schedule">
+        <div class="sched-item highlight">
+          <div class="sched-time">04:00 – 04:35<div class="sched-dur">35 mnt</div></div>
+          <div><div class="sched-act">🌙 Bangun · Shalat Subuh · Tilawah</div>
+          <div class="sched-note">Wudhu, shalat subuh tepat waktu, dzikir pagi, tilawah 1–2 halaman + muraja'ah hafalan Juz 30.</div>
+          <span class="sched-cat cat-ibadah">Ibadah</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">04:35 – 05:20<div class="sched-dur">45 mnt</div></div>
+          <div><div class="sched-act">💻 Belajar WordPress — Sesi EMAS Pagi</div>
+          <div class="sched-note">⭐ Waktu terbaik! Otak segar, rumah sunyi. Tutorial WP, latihan Elementor/WooCommerce, atau kerjakan project/task klien.</div>
+          <span class="sched-cat cat-wp">WordPress</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">05:20 – 05:50<div class="sched-dur">30 mnt</div></div>
+          <div><div class="sched-act">🌍 Bahasa Inggris — Sesi Pagi</div>
+          <div class="sched-note">Duolingo 10 mnt + hafal 10 vocab baru + dengar 1 podcast/video Inggris singkat. Catat kosakata di buku kecil.</div>
+          <span class="sched-cat cat-english">English</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">05:50 – 07:00<div class="sched-dur">70 mnt</div></div>
+          <div><div class="sched-act">🏃 Olahraga · Mandi · Sarapan · Siap Kerja</div>
+          <div class="sched-note">Olahraga ringan 20 menit (jalan/stretching). Mandi, berpakaian rapi, sarapan bersama keluarga. Berangkat agar tiba tepat sebelum 07:30.</div>
+          <span class="sched-cat cat-fisik">Fisik & Persiapan</span></div>
+        </div>
+        <div class="sched-item kerja-block">
+          <div class="sched-time">07:30 – 16:30<div class="sched-dur">9 jam kerja</div></div>
+          <div><div class="sched-act">🏥 Kerja di Puskesmas (Senin–Kamis)</div>
+          <div class="sched-note">Fokus 100% pada pasien & tugas keperawatan. Kerjakan dengan ikhlas & profesional — ini rezeki utama keluarga & ladang pahala.</div>
+          <span class="sched-cat cat-kerja">Pekerjaan Utama</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">12:00 – 12:30<div class="sched-dur">istirahat</div></div>
+          <div><div class="sched-act">🕌 Shalat Dzuhur (saat istirahat siang)</div>
+          <div class="sched-note">Tepat waktu di musholla puskesmas. Sisa waktu istirahat untuk makan siang & istirahat sebentar.</div>
+          <span class="sched-cat cat-ibadah">Ibadah</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">15:30 – 15:45<div class="sched-dur">saat kerja</div></div>
+          <div><div class="sched-act">🕌 Shalat Ashar (izin sebentar)</div>
+          <div class="sched-note">Minta izin shalat ke musholla. Tepat waktu. Ashar yang dijaga adalah tanda hamba yang bertakwa.</div>
+          <span class="sched-cat cat-ibadah">Ibadah</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">16:30 – 17:20<div class="sched-dur">50 mnt</div></div>
+          <div><div class="sched-act">🚗 Pulang + Qailulah (Tidur Siang Sunnah)</div>
+          <div class="sched-note">Perjalanan pulang. Sesampai di rumah, tidur siang 15–20 menit (qailulah sunnah). Wajib! Ini kunci energi sore hari.</div>
+          <span class="sched-cat cat-istirahat">Istirahat</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">17:20 – 17:50<div class="sched-dur">30 mnt</div></div>
+          <div><div class="sched-act">🎨 Belajar Desain Grafis</div>
+          <div class="sched-note">Rotasi harian: Canva (poster/banner) → Figma (UI/web) → Photoshop (editing) → Illustrator (logo/vektor). Buat 1 desain per hari, simpan ke folder portofolio.</div>
+          <span class="sched-cat cat-desain">Desain Grafis</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">17:50 – 18:20<div class="sched-dur">30 mnt</div></div>
+          <div><div class="sched-act">🕌 Shalat Maghrib + Dzikir Petang</div>
+          <div class="sched-note">Berjama'ah di masjid/rumah. Dzikir petang. Bacakan Al-Qur'an bersama anak-anak setelah maghrib — rutinkan sejak dini.</div>
+          <span class="sched-cat cat-ibadah">Ibadah</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">18:20 – 19:30<div class="sched-dur">70 mnt</div></div>
+          <div><div class="sched-act">👨‍👩‍👧‍👦 Quality Time Keluarga</div>
+          <div class="sched-note">HP diletakkan! Bermain bersama anak, bantu PR, cerita Nabi ﷺ & kota Madinah, ngobrol hangat dengan istri. Investasi akhirat terbaik.</div>
+          <span class="sched-cat cat-keluarga">Keluarga</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">19:30 – 20:00<div class="sched-dur">30 mnt</div></div>
+          <div><div class="sched-act">🍽️ Makan Malam Bersama</div>
+          <div class="sched-note">Makan sambil berbagi cerita positif hari ini. Bina kehangatan di meja makan.</div>
+          <span class="sched-cat cat-keluarga">Keluarga</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">20:00 – 20:30<div class="sched-dur">30 mnt</div></div>
+          <div><div class="sched-act">🕌 Shalat Isya + Doa Bersama Anak</div>
+          <div class="sched-note">Berjama'ah. Baca Ayat Kursi & doa tidur bersama anak-anak. Minta anak berdoa untuk impian hijrah ke Madinah.</div>
+          <span class="sched-cat cat-ibadah">Ibadah</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">20:30 – 21:30<div class="sched-dur">60 mnt</div></div>
+          <div><div class="sched-act">💻 WordPress — Sesi Malam</div>
+          <div class="sched-note">Kerjakan project WP: bangun halaman, optimalkan SEO, kerjakan task klien, atau pelajari plugin baru. Gunakan Pomodoro timer.</div>
+          <span class="sched-cat cat-wp">WordPress</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">21:30 – 22:15<div class="sched-dur">45 mnt</div></div>
+          <div><div class="sched-act">🌍 Bahasa Inggris — Sesi Malam + Review</div>
+          <div class="sched-note">Speaking practice 15 mnt (rekam suara sendiri / Elsa Speak) + journaling Inggris 3 kalimat + review to-do list & progress hari ini.</div>
+          <span class="sched-cat cat-english">English + Review</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">22:15 – 22:30<div class="sched-dur">15 mnt</div></div>
+          <div><div class="sched-act">📝 Rencana Esok + Tidur Tepat 22:30</div>
+          <div class="sched-note">Tulis 3 prioritas utama esok. Jauhkan HP dari tempat tidur. Baca doa tidur. Tidur tepat 22:30 agar bangun segar 04:00.</div>
+          <span class="sched-cat cat-review">Perencanaan</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JUMAT -->
+    <div class="tab-pane" id="tab-jumat">
+      <div class="schedule">
+        <div class="sched-item highlight">
+          <div class="sched-time">04:00 – 04:45<div class="sched-dur">45 mnt</div></div>
+          <div><div class="sched-act">🌙 Subuh + Tilawah Al-Kahfi (Sunnah Jumat)</div>
+          <div class="sched-note">Hari Jumat: baca Surah Al-Kahfi (pahala besar, sinaran cahaya hingga Jumat berikutnya). Perbanyak dzikir & shalawat. Doa khusus hijrah.</div>
+          <span class="sched-cat cat-ibadah">Ibadah Istimewa</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">04:45 – 05:30<div class="sched-dur">45 mnt</div></div>
+          <div><div class="sched-act">💻 Belajar WordPress</div>
+          <div class="sched-note">Sesi pagi WP: fokus pada hal yang paling perlu dikuasai minggu ini. Catat progress di jurnal belajar mingguan.</div>
+          <span class="sched-cat cat-wp">WordPress</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">05:30 – 06:00<div class="sched-dur">30 mnt</div></div>
+          <div><div class="sched-act">🌍 Bahasa Inggris</div>
+          <div class="sched-note">Duolingo + mendengarkan podcast/BBC English saat bersiap. Santai namun tetap konsisten.</div>
+          <span class="sched-cat cat-english">English</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">06:00 – 07:20<div class="sched-dur">80 mnt</div></div>
+          <div><div class="sched-act">🏃 Mandi Jumat + Wangi-wangian + Siap Berangkat</div>
+          <div class="sched-note">Sunnah Jumat: mandi, pakai wewangian, kenakan pakaian terbaik. Berangkat kerja lebih awal. Baca shalawat dalam perjalanan.</div>
+          <span class="sched-cat cat-fisik">Persiapan Jumat</span></div>
+        </div>
+        <div class="sched-item kerja-block">
+          <div class="sched-time">07:30 – 11:30<div class="sched-dur">4 jam</div></div>
+          <div><div class="sched-act">🏥 Kerja Puskesmas (Pagi Jumat)</div>
+          <div class="sched-note">Kerja dengan profesional hingga menjelang waktu shalat Jumat. Koordinasi izin untuk keluar tepat waktu.</div>
+          <span class="sched-cat cat-kerja">Pekerjaan</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">11:30 – 13:00<div class="sched-dur">90 mnt</div></div>
+          <div><div class="sched-act">🕌 Shalat Jumat + Dzikir & Shalawat</div>
+          <div class="sched-note">Berangkat lebih awal ke masjid. Dengarkan khutbah dengan penuh perhatian. Perbanyak shalawat & doa di waktu mustajab hari Jumat.</div>
+          <span class="sched-cat cat-ibadah">Shalat Jumat</span></div>
+        </div>
+        <div class="sched-item kerja-block">
+          <div class="sched-time">13:00 – 14:30<div class="sched-dur">90 mnt</div></div>
+          <div><div class="sched-act">🏥 Kerja Puskesmas (Siang — selesai 14:30)</div>
+          <div class="sched-note">Jumat pulang lebih awal pukul 14:30. Manfaatkan sisa jam ini untuk recharge & persiapan sore yang lebih produktif.</div>
+          <span class="sched-cat cat-kerja">Pekerjaan</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">14:30 – 15:15<div class="sched-dur">45 mnt</div></div>
+          <div><div class="sched-act">😴 Pulang + Qailulah</div>
+          <div class="sched-note">Perjalanan pulang & istirahat siang 20–30 menit. Isi ulang tenaga untuk sesi belajar sore yang lebih panjang.</div>
+          <span class="sched-cat cat-istirahat">Istirahat</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">15:15 – 15:50<div class="sched-dur">35 mnt</div></div>
+          <div><div class="sched-act">🕌 Shalat Ashar + Doa Mustajab Jumat</div>
+          <div class="sched-note">Waktu antara Ashar–Maghrib hari Jumat = waktu paling mustajab dalam seminggu. Panjatkan doa hijrah, rezeki halal, dan keselamatan keluarga.</div>
+          <span class="sched-cat cat-ibadah">Ibadah Mustajab</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">15:50 – 16:50<div class="sched-dur">60 mnt</div></div>
+          <div><div class="sched-act">🎨 Desain Grafis — Sesi Lebih Panjang</div>
+          <div class="sched-note">Karena pulang lebih awal, manfaatkan untuk sesi desain mendalam: tutorial Figma, Photoshop, atau Illustrator (logo/vektor) — atau kerjakan project desain klien.</div>
+          <span class="sched-cat cat-desain">Desain Grafis</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">16:50 – 17:35<div class="sched-dur">45 mnt</div></div>
+          <div><div class="sched-act">📊 Review Mingguan — Evaluasi Progress</div>
+          <div class="sched-note">Evaluasi minggu ini: WP, desain, Inggris, ibadah, keuangan, keluarga. Apa yang berhasil? Apa yang perlu diperbaiki? Rencanakan minggu depan.</div>
+          <span class="sched-cat cat-review">Review Mingguan</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">17:35 – 18:15<div class="sched-dur">40 mnt</div></div>
+          <div><div class="sched-act">🕌 Shalat Maghrib + Sedekah Jumat + Tilawah</div>
+          <div class="sched-note">Sedekah rutin setiap Jumat — hari terbaik untuk bersedekah. Tilawah bersama anak setelah maghrib.</div>
+          <span class="sched-cat cat-ibadah">Ibadah</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">18:15 – 19:45<div class="sched-dur">90 mnt</div></div>
+          <div><div class="sched-act">👨‍👩‍👧‍👦 Malam Keluarga — Malam Sabtu Istimewa</div>
+          <div class="sched-note">Malam Sabtu = waktu paling santai. Nonton film islami bersama, cerita Nabi ﷺ, atau diskusi mimpi hijrah bersama istri dan anak-anak.</div>
+          <span class="sched-cat cat-keluarga">Keluarga</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">20:00 – 20:30<div class="sched-dur">30 mnt</div></div>
+          <div><div class="sched-act">🕌 Shalat Isya</div>
+          <div class="sched-note">Berjama'ah. Doa bersama anak-anak sebelum tidur.</div>
+          <span class="sched-cat cat-ibadah">Ibadah</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">20:30 – 22:00<div class="sched-dur">90 mnt</div></div>
+          <div><div class="sched-act">💻 WP Santai + Nonton Konten Inggris</div>
+          <div class="sched-note">Nonton tutorial WP yang ringan / eksplor plugin baru 60 mnt. Akhiri dengan nonton series/film berbahasa Inggris 30 mnt tanpa subtitle.</div>
+          <span class="sched-cat cat-wp">WP + English</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">22:00 – 22:30<div class="sched-dur">30 mnt</div></div>
+          <div><div class="sched-act">😴 Persiapan Tidur</div>
+          <div class="sched-note">Tulis 3 hal yang disyukuri hari ini. Doa tidur. Tidur tepat 22:30.</div>
+          <span class="sched-cat cat-istirahat">Istirahat</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SABTU -->
+    <div class="tab-pane" id="tab-sabtu">
+      <div class="schedule">
+        <div class="sched-item highlight">
+          <div class="sched-time">04:00 – 04:45<div class="sched-dur">45 mnt</div></div>
+          <div><div class="sched-act">🌙 Tahajud + Subuh + Tilawah Panjang</div>
+          <div class="sched-note">Hari libur penuh — maksimalkan ibadah pagi. Tahajud + subuh + tilawah 3–5 halaman. Berdoa panjang untuk impian hijrah & kemudahan rezeki.</div>
+          <span class="sched-cat cat-ibadah">Ibadah</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">04:45 – 06:45<div class="sched-dur">120 mnt</div></div>
+          <div><div class="sched-act">💻 WordPress — Sesi Intensif Sabtu Pagi</div>
+          <div class="sched-note">⭐ Sesi WP TERPANJANG dalam seminggu! Kerjakan project besar: custom theme, bangun halaman website klien, atau pelajari PHP/WooCommerce mendalam.</div>
+          <span class="sched-cat cat-wp">WordPress Intensif</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">06:45 – 07:45<div class="sched-dur">60 mnt</div></div>
+          <div><div class="sched-act">🏃 Olahraga Pagi + Sarapan Keluarga</div>
+          <div class="sched-note">Jalan pagi bersama anak-anak atau istri — bonding & sehat bersamaan. Sarapan santai bersama keluarga setelahnya.</div>
+          <span class="sched-cat cat-fisik">Fisik + Keluarga</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">07:45 – 09:15<div class="sched-dur">90 mnt</div></div>
+          <div><div class="sched-act">🎨 Desain Grafis — Sesi Intensif</div>
+          <div class="sched-note">Tutorial mendalam: Canva, Figma, Photoshop, atau Illustrator (logo & vektor). Selesaikan 2–3 desain. Upload ke Behance/Instagram portofolio.</div>
+          <span class="sched-cat cat-desain">Desain Intensif</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">09:15 – 10:15<div class="sched-dur">60 mnt</div></div>
+          <div><div class="sched-act">🌍 Bahasa Inggris — Sesi Intensif</div>
+          <div class="sched-note">Speaking practice 30 mnt (rekam diri sendiri / HelloTalk / Elsa Speak) + grammar lesson 30 mnt. Fokus email bisnis & komunikasi klien internasional.</div>
+          <span class="sched-cat cat-english">English Intensif</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">10:15 – 12:00<div class="sched-dur">105 mnt</div></div>
+          <div><div class="sched-act">👨‍👩‍👧‍👦 Outing / Aktivitas Keluarga</div>
+          <div class="sched-note">Jalan ke taman, perpustakaan, atau wisata keluarga. HP hanya untuk foto. Hadir penuh. Ceritakan tentang Madinah kepada anak-anak dengan cara menyenangkan.</div>
+          <span class="sched-cat cat-keluarga">Keluarga</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">12:00 – 12:30<div class="sched-dur">30 mnt</div></div>
+          <div><div class="sched-act">🕌 Shalat Dzuhur Berjama'ah</div>
+          <div class="sched-note">Shalat dzuhur di masjid terdekat saat outing. Ajarkan anak laki-laki untuk shalat berjama'ah sejak dini.</div>
+          <span class="sched-cat cat-ibadah">Ibadah</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">12:30 – 14:00<div class="sched-dur">90 mnt</div></div>
+          <div><div class="sched-act">🍽️ Makan Siang Keluarga + Qailulah</div>
+          <div class="sched-note">Makan siang bersama. Istirahat/qailulah 30 menit. Tidak ada layar, tidak ada belajar — tubuh butuh recharge total.</div>
+          <span class="sched-cat cat-istirahat">Keluarga + Istirahat</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">14:00 – 15:30<div class="sched-dur">90 mnt</div></div>
+          <div><div class="sched-act">💻 Freelance Marketing — Fiverr & Upwork</div>
+          <div class="sched-note">Update profil Fiverr/Upwork, buat gig baru, apply ke 3–5 job posting, atau kirim proposal ke klien potensial. Strategi marketing freelance.</div>
+          <span class="sched-cat cat-wp">WP + Freelance</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">15:30 – 16:15<div class="sched-dur">45 mnt</div></div>
+          <div><div class="sched-act">🕌 Shalat Ashar + Kajian Islam Online</div>
+          <div class="sched-note">Shalat ashar berjama'ah. Dengarkan 1 ceramah singkat online: tema hijrah, rezeki halal, atau fiqih muamalah digital.</div>
+          <span class="sched-cat cat-ibadah">Ibadah + Kajian</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">17:30 – 18:15<div class="sched-dur">45 mnt</div></div>
+          <div><div class="sched-act">🕌 Shalat Maghrib + Tilawah Bersama Anak</div>
+          <div class="sched-note">Tilawah & hafalan pendek bersama anak setelah maghrib. Rutinkan — ini pembentukan karakter Qur'ani anak-anak Anda.</div>
+          <span class="sched-cat cat-ibadah">Ibadah</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">18:15 – 20:00<div class="sched-dur">105 mnt</div></div>
+          <div><div class="sched-act">👨‍👩‍👧‍👦 Malam Bersama Keluarga</div>
+          <div class="sched-note">Makan malam, board game, atau aktivitas kreatif bersama anak. Momen terbaik dalam sehari.</div>
+          <span class="sched-cat cat-keluarga">Keluarga</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">20:00 – 20:30<div class="sched-dur">30 mnt</div></div>
+          <div><div class="sched-act">🕌 Shalat Isya</div>
+          <div class="sched-note">Berjama'ah. Doa bersama anak sebelum tidur.</div>
+          <span class="sched-cat cat-ibadah">Ibadah</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">20:30 – 22:00<div class="sched-dur">90 mnt</div></div>
+          <div><div class="sched-act">🌍 Inggris Santai + Baca Pengembangan Diri</div>
+          <div class="sched-note">Nonton film/series Inggris tanpa subtitle 45 mnt + baca buku pengembangan diri atau eksplorasi tren desain grafis terbaru 45 mnt.</div>
+          <span class="sched-cat cat-english">English + Desain</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">22:00 – 22:30<div class="sched-dur">30 mnt</div></div>
+          <div><div class="sched-act">😴 Gratitude Journal + Tidur</div>
+          <div class="sched-note">Tulis 3 hal yang disyukuri hari ini. Doa tidur. Tidur tepat 22:30.</div>
+          <span class="sched-cat cat-istirahat">Istirahat</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AHAD -->
+    <div class="tab-pane" id="tab-ahad">
+      <div class="schedule">
+        <div class="sched-item highlight">
+          <div class="sched-time">04:00 – 05:00<div class="sched-dur">60 mnt</div></div>
+          <div><div class="sched-act">🌙 Tahajud + Subuh + Tilawah + Doa Panjang</div>
+          <div class="sched-note">Ahad = hari libur penuh. Mulai dengan ibadah terbaik. Tilawah 3–5 halaman. Berdoa panjang untuk hajat hijrah, rezeki halal, dan keberkahan keluarga.</div>
+          <span class="sched-cat cat-ibadah">Ibadah Utama</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">05:00 – 07:00<div class="sched-dur">120 mnt</div></div>
+          <div><div class="sched-act">💻 WordPress — Deep Work Session</div>
+          <div class="sched-note">Sesi kerja mendalam. Kerjakan project yang butuh konsentrasi: custom coding, perbaikan performa website, atau pelajari skill WP tingkat lanjut.</div>
+          <span class="sched-cat cat-wp">WordPress Deep Work</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">07:00 – 08:00<div class="sched-dur">60 mnt</div></div>
+          <div><div class="sched-act">🌍 Arab Dasar + Bahasa Inggris</div>
+          <div class="sched-note">Bahasa Arab 30 mnt (kosakata harian penting untuk hidup di Madinah) + Bahasa Inggris 30 mnt (conversation atau grammar). Dua bahasa = dua kunci pintu dunia.</div>
+          <span class="sched-cat cat-english">Arab + English</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">08:00 – 09:00<div class="sched-dur">60 mnt</div></div>
+          <div><div class="sched-act">🏃 Olahraga + Sarapan Keluarga</div>
+          <div class="sched-note">Olahraga lebih lama di hari Ahad. Sarapan santai bersama keluarga. Rencanakan hari bersama dengan ngobrol ringan.</div>
+          <span class="sched-cat cat-fisik">Fisik + Keluarga</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">09:00 – 10:30<div class="sched-dur">90 mnt</div></div>
+          <div><div class="sched-act">🎨 Desain Grafis — Project Portofolio</div>
+          <div class="sched-note">Buat project desain lebih besar: branding pack (Illustrator/Photoshop), mockup website (Figma), atau template media sosial lengkap. Simpan dan upload ke Behance/Dribbble.</div>
+          <span class="sched-cat cat-desain">Desain Grafis</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">10:30 – 12:00<div class="sched-dur">90 mnt</div></div>
+          <div><div class="sched-act">👨‍👩‍👧‍👦 Aktivitas Keluarga Islami</div>
+          <div class="sched-note">Mengaji bersama anak, membaca buku islami, permainan edukatif, atau berkebun bersama. Ceritakan kisah Nabi ﷺ dan kota Madinah kepada anak dengan cara menarik.</div>
+          <span class="sched-cat cat-keluarga">Keluarga</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">12:00 – 12:30<div class="sched-dur">30 mnt</div></div>
+          <div><div class="sched-act">🕌 Shalat Dzuhur Berjama'ah</div>
+          <div class="sched-note">Ajak anak laki-laki ke masjid. Biasakan sejak kecil agar mencintai masjid seperti umat yang mencintai Masjid Nabawi.</div>
+          <span class="sched-cat cat-ibadah">Ibadah</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">12:30 – 14:00<div class="sched-dur">90 mnt</div></div>
+          <div><div class="sched-act">🍽️ Makan Siang + Istirahat Total</div>
+          <div class="sched-note">Makan siang bersama. Qailulah 30 menit. Tidak ada layar, tidak ada belajar. Tubuh butuh recharge penuh untuk memulai minggu baru besok.</div>
+          <span class="sched-cat cat-istirahat">Keluarga + Istirahat</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">14:00 – 15:30<div class="sched-dur">90 mnt</div></div>
+          <div><div class="sched-act">📋 Perencanaan & Administrasi Hijrah</div>
+          <div class="sched-note">Setiap Ahad: evaluasi progres bulan ini. Cek tabungan Dana Hijrah. Riset informasi terbaru tentang visa Saudi, komunitas WNI di Madinah, atau lowongan kerja di sana.</div>
+          <span class="sched-cat cat-review">Perencanaan Hijrah</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">15:30 – 16:30<div class="sched-dur">60 mnt</div></div>
+          <div><div class="sched-act">🕌 Shalat Ashar + Halaqah / Kajian Mingguan</div>
+          <div class="sched-note">Shalat ashar berjama'ah. Ikut halaqah mingguan di masjid atau online. Perluas wawasan Islam & jalin silaturahim dengan komunitas yang mendukung impian hijrah.</div>
+          <span class="sched-cat cat-ibadah">Ibadah + Kajian</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">16:30 – 17:30<div class="sched-dur">60 mnt</div></div>
+          <div><div class="sched-act">💻 Freelance: Proposal & Networking</div>
+          <div class="sched-note">Kirim 3–5 proposal Fiverr/Upwork. Aktif di forum WP & komunitas desainer. Bangun relasi dengan freelancer dan komunitas muslim perantau Saudi.</div>
+          <span class="sched-cat cat-wp">Freelance Networking</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">17:30 – 18:15<div class="sched-dur">45 mnt</div></div>
+          <div><div class="sched-act">🕌 Maghrib + Muhasabah Mingguan</div>
+          <div class="sched-note">Setelah maghrib: muhasabah — sudahkah ibadah, belajar, dan keluarga seimbang minggu ini? Apa syukur terbesar? Apa yang perlu diperbaiki?</div>
+          <span class="sched-cat cat-ibadah">Ibadah + Muhasabah</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">18:15 – 20:00<div class="sched-dur">105 mnt</div></div>
+          <div><div class="sched-act">👨‍👩‍👧‍👦 Malam Keluarga — Persiapan Senin</div>
+          <div class="sched-note">Makan malam bersama. Diskusi ringan dengan istri tentang progres & rencana minggu depan. Siapkan anak-anak untuk sekolah dan siapkan diri untuk minggu kerja baru.</div>
+          <span class="sched-cat cat-keluarga">Keluarga</span></div>
+        </div>
+        <div class="sched-item highlight">
+          <div class="sched-time">20:00 – 20:30<div class="sched-dur">30 mnt</div></div>
+          <div><div class="sched-act">🕌 Shalat Isya + Doa Bersama Anak</div>
+          <div class="sched-note">Tutup hari Ahad dengan isya berjama'ah. Minta anak berdoa dengan kata mereka sendiri — momen mendidik iman yang tak ternilai.</div>
+          <span class="sched-cat cat-ibadah">Ibadah</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">20:30 – 22:00<div class="sched-dur">90 mnt</div></div>
+          <div><div class="sched-act">📝 Rencanakan Minggu Baru + Belajar Santai</div>
+          <div class="sched-note">Buat target minggu depan (WP, desain, Inggris, ibadah, keuangan). Sisanya: baca buku pengembangan diri atau nonton konten Inggris/desain ringan.</div>
+          <span class="sched-cat cat-review">Perencanaan Minggu</span></div>
+        </div>
+        <div class="sched-item">
+          <div class="sched-time">22:00 – 22:30<div class="sched-dur">30 mnt</div></div>
+          <div><div class="sched-act">😴 Gratitude + Doa Tidur</div>
+          <div class="sched-note">Tulis 3 hal syukur hari ini. Niatkan bangun 04:00. Berdoa. Tidur tepat 22:30 untuk memulai Senin dengan penuh semangat.</div>
+          <span class="sched-cat cat-istirahat">Istirahat</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RINGKASAN MINGGUAN -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">06</div>
+      <div><div class="section-title">Ringkasan Jam Belajar Mingguan</div><div class="section-subtitle">Estimasi total jam per skill setiap minggu</div></div>
+    </div>
+    <div class="week-summary">
+      <div class="week-card">
+        <div class="week-day">Sen–Kam (×4)</div>
+        <div class="week-items">
+          <div class="week-item">💻 WP: 4×1,75 = <strong>7 jam</strong></div>
+          <div class="week-item">🌍 Inggris: 4×1 = <strong>4 jam</strong></div>
+          <div class="week-item">🎨 Desain: 4×0,5 = <strong>2 jam</strong></div>
+        </div>
+      </div>
+      <div class="week-card">
+        <div class="week-day">Jumat</div>
+        <div class="week-items">
+          <div class="week-item">💻 WP: <strong>2,5 jam</strong></div>
+          <div class="week-item">🌍 Inggris: <strong>1 jam</strong></div>
+          <div class="week-item">🎨 Desain: <strong>1 jam</strong></div>
+          <div class="week-item special">📊 Review Mingguan</div>
+        </div>
+      </div>
+      <div class="week-card">
+        <div class="week-day">Sabtu</div>
+        <div class="week-items">
+          <div class="week-item">💻 WP: <strong>3,5 jam</strong></div>
+          <div class="week-item">🌍 Inggris: <strong>2,5 jam</strong></div>
+          <div class="week-item">🎨 Desain: <strong>1,5 jam</strong></div>
+          <div class="week-item special">👨‍👩‍👧‍👦 Outing Keluarga</div>
+        </div>
+      </div>
+      <div class="week-card">
+        <div class="week-day">Ahad</div>
+        <div class="week-items">
+          <div class="week-item">💻 WP: <strong>3,5 jam</strong></div>
+          <div class="week-item">🌍 Arab+Inggris: <strong>2 jam</strong></div>
+          <div class="week-item">🎨 Desain: <strong>1,5 jam</strong></div>
+          <div class="week-item special">📋 Riset Hijrah</div>
+        </div>
+      </div>
+      <div class="week-card" style="border-color:rgba(201,168,76,0.45);">
+        <div class="week-day" style="color:var(--gold-light);">TOTAL/MINGGU</div>
+        <div class="week-items">
+          <div class="week-item special">💻 WP: ≈ 16,5 jam</div>
+          <div class="week-item special">🌍 Inggris: ≈ 9,5 jam</div>
+          <div class="week-item special">🎨 Desain: ≈ 6 jam</div>
+          <div class="week-item" style="color:var(--gold);font-weight:700;font-size:.76rem;margin-top:5px;border-top:1px solid rgba(201,168,76,0.2);padding-top:5px;">≈ 32 jam belajar/minggu</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">07</div>
+      <div><div class="section-title">Kunci Keberhasilan</div><div class="section-subtitle">Prinsip yang tidak boleh dilupakan dalam perjalanan ini</div></div>
+    </div>
+    <div class="tips-grid">
+      <div class="tip-card"><div class="tip-icon">🔑</div><div class="tip-title">Konsistensi > Intensitas</div><div class="tip-text">45 mnt belajar setiap hari jauh lebih efektif dari 7 jam sehari sekali. Kecil tapi konsisten = kemenangan sejati.</div></div>
+      <div class="tip-card"><div class="tip-icon">📱</div><div class="tip-title">Kelola Distraksi</div><div class="tip-text">Nonaktifkan notif media sosial saat belajar. Pakai Pomodoro: 25 mnt fokus + 5 mnt istirahat. Ubah HP ke bahasa Inggris.</div></div>
+      <div class="tip-card"><div class="tip-icon">💰</div><div class="tip-title">Dana Hijrah Wajib</div><div class="tip-text">Sisihkan min. 10–15% penghasilan/bulan ke rekening khusus. Otomatiskan agar tidak terlewat. Ini fondasi hijrah fisik.</div></div>
+      <div class="tip-card"><div class="tip-icon">🌍</div><div class="tip-title">Inggris = Pintu Dunia</div><div class="tip-text">Bahasa Inggris membuka akses ke klien global & peluang kerja di Madinah. Nonton YouTube tanpa subtitle setiap hari.</div></div>
+      <div class="tip-card"><div class="tip-icon">🎨</div><div class="tip-title">WP + Desain = Premium</div><div class="tip-text">Freelancer yang bisa WP sekaligus desain grafis dibayar 2–3x lebih tinggi. Ini keunggulan kompetitif terbesar Anda.</div></div>
+      <div class="tip-card"><div class="tip-icon">🌙</div><div class="tip-title">Niatkan sebagai Ibadah</div><div class="tip-text">Setiap sesi belajar, niatkan untuk menghidupi keluarga & mendekatkan diri ke Allah ﷻ dan Rasul-Nya ﷺ di Madinah.</div></div>
+    </div>
+  </div>
+
+  <!-- DOA -->
+  <div class="doa-box">
+    <div class="doa-arabic">رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ</div>
+    <div class="doa-latin">"Rabbanā ātinā fid-dunyā hasanah, wa fil-ākhirati hasanah, wa qinā 'adzāban-nār"</div>
+    <div class="doa-arti">Ya Rabb kami, berikanlah kami kebaikan di dunia dan kebaikan di akhirat, dan jagalah kami dari siksa api neraka. (QS. Al-Baqarah: 201)</div>
+    <div class="divider" style="margin-top:24px"></div>
+    <div style="font-size:.8rem; color:rgba(245,237,216,0.6); margin-top:8px;">
+      Semoga Allah ﷻ mudahkan setiap langkah perjalanan hijrah Anda dan keluarga ke kota Nabi ﷺ — Madinah Al-Munawwarah.<br>
+      آمِيْن يَا رَبَّ الْعَالَمِيْن
+    </div>
+  </div>
+
+  <div class="footer">Dibuat dengan niat baik · Semoga bermanfaat & menjadi amal jariyah · إِنَّ مَعَ الْعُسْرِ يُسْرًا</div>
+</div>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
